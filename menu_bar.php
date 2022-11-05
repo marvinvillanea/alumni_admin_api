@@ -135,8 +135,20 @@
                         <i class="fas fa-chart-bar"></i>Charts</a>
                 </li> -->
                 <li>
-                    <a href="index.php?page=table">
-                        <i class="fas fa-table"></i>Alumni List</a>
+                    <a href="index.php?page=pending">
+                        <i class="fas fa-table"></i>Pending Request</a>
+                </li>
+                <li>
+                    <a href="index.php?page=approved">
+                        <i class="fas fa-table"></i>Approved</a>
+                </li>
+                <li>
+                    <a href="index.php?page=denied">
+                        <i class="fas fa-table"></i>Disapproved</a>
+                </li>
+                <li>
+                    <a href="index.php?page=postingjobs">
+                        <i class="fas fa-table"></i>Posting Jobs</a>
                 </li>
                 <!-- <li>
                     <a href="form.html">

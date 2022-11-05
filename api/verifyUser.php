@@ -15,7 +15,7 @@
             $data = file_get_contents('php://input');
             $data = json_decode($data);
             if(isset($data->email) && isset($data->password)){
-                $getDeatilsUser = $db->Select("select * from users where email = ? and password = ? and user_type = 2", array($data->email, $data->password));
+                $getDeatilsUser = $db->Select("select * from users where email = ? and password = ? and user_type = 2 limit 1", array($data->email, $data->password));
                 if(count($getDeatilsUser) > 0) {
                     if($getDeatilsUser[0]['status'] == 1) {
                         echo "SUCCESS";

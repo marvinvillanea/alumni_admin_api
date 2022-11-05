@@ -11,7 +11,9 @@
         // //add your check here that is $data["username"] as bellow
         // // isset($data["username"])
         // return $data;
-        $data = $db->Update("update users SET status = 1 WHERE user_id = ? ", array($_POST["user_id"]));
+        $status = (isset($_POST["name"]) && $_POST["name"] == 'reject') ? 3 : 1;
+        $data = $db->Update("update users SET status = ? WHERE user_id = ? ", array($status,$_POST["user_id"]));
+
     } catch(\Exception $e) {
         echo "FAILED";
     }
