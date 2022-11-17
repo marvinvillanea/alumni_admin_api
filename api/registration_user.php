@@ -14,6 +14,7 @@
         if(isset($_POST)){
             $data = file_get_contents('php://input');
             $data = json_decode($data);
+            $db->Insert('insert into logs (descriptions) values (?) ', array(json_encode($data)));
             if(isset($data->email) && isset($data->password)){
                 $getDeatilsUser = $db->Select("select * from users where email = ? and password = ? and user_type = 2", array($data->email, $data->password));
                 if(count($getDeatilsUser) > 0) {
@@ -27,7 +28,7 @@
                     $getDeatilsUser = $db->Insert("INSERT INTO users (email,password,username,status, user_type) VALUES (?,?,?,?,?)", array($data->email, $data->password, $data->first_name, 0,2));
                     if($getDeatilsUser){
                         echo "NOT_VERIFY";
-                    } else {
+                    } else {    
                         echo "FAILED";
                     }
                 }
