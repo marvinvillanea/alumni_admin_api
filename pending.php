@@ -5,19 +5,14 @@
         <div class="row">
             <div class="col-md-12">
                  <!-- DATA TABLE -->
-                 <h3 class="title-5 m-b-35">Student Confirmation</h3>
+                 <h3 class="title-5 m-b-35">Alumni | Pending</h3>
                     <div class="table-responsive table-responsive-data2">
                         <table class="table table-data2">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <label class="au-checkbox">
-                                            <input type="checkbox">
-                                            <span class="au-checkmark"></span>
-                                        </label>
-                                    </th>
                                     <th>name</th>
-                                    <th>email</th>
+                                    <th>course</th>
+                                    <th>School year</th>
                                     <th>date</th>
                                     <th>status</th>
                                     <th>Action</th>
@@ -30,12 +25,6 @@
                                         foreach ($user_to_verify as $key => $value) {
                                             ?>
                                             <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
                                                 <td><?php echo $value["username"]; ?></td>
                                                 <td>
                                                     <span class="block-email"><?php echo $value["email"]; ?></span>

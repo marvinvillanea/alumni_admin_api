@@ -5,19 +5,14 @@
         <div class="row">
             <div class="col-md-12">
                  <!-- DATA TABLE -->
-                 <h3 class="title-5 m-b-35">Student Confirmation</h3>
+                 <h3 class="title-5 m-b-35">Alumni | Disapproved</h3>
                     <div class="table-responsive table-responsive-data2">
                         <table class="table table-data2">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <label class="au-checkbox">
-                                            <input type="checkbox">
-                                            <span class="au-checkmark"></span>
-                                        </label>
-                                    </th>
                                     <th>name</th>
-                                    <th>email</th>
+                                    <th>course</th>
+                                    <th>School year</th>
                                     <th>date</th>
                                     <th>status</th>
                                     <th>Action</th>
@@ -25,29 +20,24 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    $user_to_verify = $db->select("SELECT * FROM users where status = 3 and user_type = 2 order by username asc");
+                                    $user_to_verify = $db->select("SELECT * FROM users where status = 3 and user_type = 2");
                                     if(count($user_to_verify) > 0){
                                         foreach ($user_to_verify as $key => $value) {
                                             ?>
                                             <tr class="tr-shadow">
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
-                                                <td><?php echo ucfirst($value["username"]); ?></td>
+                                                <td><?php echo $value["username"]; ?></td>
                                                 <td>
                                                     <span class="block-email"><?php echo $value["email"]; ?></span>
                                                 </td>
                                                 <td><?php echo $value["created_at"]; ?></td>
                                                 <td>
-                                                    <span style="color:red">Rejected</span>
+                                                    <span class="status--process">Pending</span>
                                                 </td>
                                                 <td>
-                                                    <button type="button" class="btn btn-outline-primary" id="<?php echo $value["user_id"] ?>" >
-                                                        <i class="zmdi zmdi-eye"></i>&nbsp;</button>
-                                                        
+                                                <button type="button" class="btn btn-outline-danger" id="<?php echo $value["user_id"] ?>" name="reject" onclick="updateStatus(this.id, this.name)">
+                                                        <i class="fa fa-map-marker"></i>&nbsp; Reject</button>
+                                                    <button type="button" class="btn btn-outline-warning" id="<?php echo $value["user_id"] ?>"  name="confirm" onclick="updateStatus(this.id, this.name)">
+                                                        <i class="fa fa-map-marker"></i>&nbsp; Confirm</button>
                                                 </td>
                                             </tr>
                                             <?php
@@ -80,3 +70,14 @@
         </div> -->
     </div>
 </div>
+           
+<script type="text/javascript">
+  function updateStatus(user_id, name) 
+  {
+    $.post("api/confirmation.php",{user_id: user_id, name: name}, function(data) 
+    { 
+        location.reload(true); 
+    }
+    );
+  }
+</script>
