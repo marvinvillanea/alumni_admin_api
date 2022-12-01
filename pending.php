@@ -20,14 +20,25 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    $user_to_verify = $db->select("SELECT * FROM users where status = 0 and user_type = 2");
+                                    $user_to_verify = $db->select("
+                                    SELECT 
+                                    *,
+                                    concat(last_name, ', ', first_name) as fullname,
+                                    (SELECT concat(code,' - ', descriptions ) FROM course where course_id = pi.course_id ) as code,
+                                    (SELECT sy FROM sy where sy_id = pi.sy_id ) as sy
+                                    FROM users
+                                    inner join personal_info pi using (user_id)
+                                    where status = 0 and user_type = 2");
                                     if(count($user_to_verify) > 0){
                                         foreach ($user_to_verify as $key => $value) {
                                             ?>
                                             <tr class="tr-shadow">
-                                                <td><?php echo $value["username"]; ?></td>
+                                                <td><?php echo ucwords($value["fullname"]); ?></td>
                                                 <td>
-                                                    <span class="block-email"><?php echo $value["email"]; ?></span>
+                                                    <span class="block-email"><?php echo $value["code"]; ?></span>
+                                                </td>
+                                                <td>
+                                                    <span class="block-email"><?php echo $value["sy"]; ?></span>
                                                 </td>
                                                 <td><?php echo $value["created_at"]; ?></td>
                                                 <td>

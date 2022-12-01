@@ -11,6 +11,7 @@
         // //add your check here that is $data["username"] as bellow
         // // isset($data["username"])
         // return $data;
+        header('Content-Type: application/json; charset=utf-8');
         if(isset($_POST)){
             $data = file_get_contents('php://input');
             $data = json_decode($data);
@@ -18,7 +19,13 @@
                 $getDeatilsUser = $db->Select("select * from users where email = ? and password = ? and user_type = 2 limit 1", array($data->email, $data->password));
                 if(count($getDeatilsUser) > 0) {
                     if($getDeatilsUser[0]['status'] == 1) {
-                        echo "SUCCESS";
+                        $token =  substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, 64);
+                        $response = array(
+                            "code" => "200",
+                            "token" => $token,
+                        );
+                        echo json_encode($response);
+                        
                     } else {
                         echo "NOT_VERIFY";
                     }
