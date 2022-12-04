@@ -16,10 +16,10 @@
                 $data["sy"] = $value["sy"];
                 $store[] = $data;
             }
-            $response = [
+            $response = array(
                 "code" => "200",
-                "details" => $store,
-            ];
+                "details" => $store
+            );
             echo json_encode($response);
         } else {
            $response = [
