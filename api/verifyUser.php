@@ -20,6 +20,7 @@
                 if(count($getDeatilsUser) > 0) {
                     if($getDeatilsUser[0]['status'] == 1) {
                         $token =  substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyz"), 0, 64);
+                        $db->Insert("INSERT INTO `access_token` (access_token, user_id) VALUES (?,?)", array($token, $getDeatilsUser[0]['user_id']));
                         $response = array(
                             "code" => "200",
                             "token" => $token,

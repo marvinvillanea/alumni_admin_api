@@ -26,7 +26,7 @@
                                     concat(last_name, ', ', first_name) as fullname,
                                     (SELECT concat(code,' - ', descriptions ) FROM course where course_id = pi.course_id ) as code,
                                     (SELECT sy FROM sy where sy_id = pi.sy_id ) as sy,
-                                    case when status_user = 1 then 'Active' else 'Inactive' end as type
+                                    case when status = 1 then 'Active' else 'Inactive' end as type
                                     FROM users
                                     inner join personal_info pi using (user_id)
                                     where status = 1 and user_type = 2");
