@@ -5,9 +5,17 @@
     
     try {
         $db = new DatabaseClass();
-      
-        $data = file_get_contents('php://input');
-        $getDeatilsUser = $db->Select("select *, SUBSTRING(address, 1 , 15) as addss from job order by created_at");
+        $token = '';
+        if(isset($_POST)){
+            $data = file_get_contents('php://input');
+            $data = json_decode($data);
+            if(isset($data->token)){
+                $token = 'where course_id =  ( select course_id from personal_info where user_id = ( select user_id from access_token where access_token = "'.$data->token.'" )  ) ';
+            }
+        }
+
+        
+        $getDeatilsUser = $db->Select("select *, SUBSTRING(address, 1 , 20) as addss from job ".$token." order by created_at");
         header('Content-Type: application/json; charset=utf-8');
         if(count($getDeatilsUser) > 0) {
             $data = array();

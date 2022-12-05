@@ -155,6 +155,10 @@
                         <i class="fas fa-table"></i>Job List</a>
                 </li>
                 <li>
+                    <a href="index.php?page=create_event">
+                        <i class="fas fa-table"></i>Create Event</a>
+                </li>
+                <li>
                     <a href="index.php?page=events">
                         <i class="fas fa-table"></i>Events</a>
                 </li>

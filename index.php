@@ -1,7 +1,10 @@
 <?php 
     
+    require  'vendor/autoload.php';
     require_once('pages/header.php');
     require('function.php');
+
+
  
 ?>
 
