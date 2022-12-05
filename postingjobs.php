@@ -2,12 +2,18 @@
  $message = "";
  if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"]  == "POST") {
  //    updateUSerProfile($db);
-    if(addJobsDescriptions($db)){
-         $message = "Successfuly Update";
+    // if(addJobsDescriptions($db)){
+    //      $message = "Successfuly Update";
         
-    }
+    // }
+    addJobsDescriptions($db);
+    // echo "<pre>";
+    //     var_dump($_POST);
+    // echo "</pre>";
 
-     header('location:index.php?page=pending');
+    // extrat($_POST);
+
+    // header('location:index.php?page=joblist');
      // echo "<pre>";
      //     var_dump($_POST);    
      // echo "</pre>";
@@ -32,8 +38,12 @@
                                     <input type="file" name="photo" id="preview_photo"  class="form-control" style="border:none!important;" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="inputIsInvalid" class=" form-control-label">Comapny Name</label>
+                                    <input type="text" id="inputIsInvalid" class="form-control" name="company_name" required>
+                                </div>
+                                <div class="form-group">
                                     <label for="inputIsInvalid" class=" form-control-label">Job Title</label>
-                                    <input type="text" id="inputIsInvalid" class="form-control" required>
+                                    <input type="text" id="inputIsInvalid" class="form-control" name="job_title" required>
                                 </div>
 
                                 <div class="form-group">
@@ -63,11 +73,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="minimum" class="form-control-label" required>Minimum Salary</label>
-                                    <input type="number" id="minimum" class="form-control">
+                                    <input type="number" id="minimum" class="form-control" name="min">
                                 </div>
                                 <div class="form-group">
                                     <label for="max" class="form-control-label" required>Maximum Salary</label>
-                                    <input type="number" id="max" class="form-control">
+                                    <input type="number" id="max" class="form-control"  name="max">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputIsInvalid" class=" form-control-label">Type</label>
+                                    <select name="type_time" id="type" class="form-control" required>
+                                       <option value="Full-Time">Full-Time</option>
+                                       <option value="Part-Time">Part-Time</option>
+                                       <option value="Freelancer">Freelancer</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="max" class="form-control-label" required>Address</label>
+                                    <input type="text"  class="form-control"  name="address">
                                 </div>
                                 <div class="form-group">
                                     <input  class="au-btn au-btn--block au-btn--green m-b-20" type="submit" style="background:linear-gradient(90deg, rgb(120 7 7) 0%, rgb(253 29 29) 100%)" name="submit" value="save us"/>
