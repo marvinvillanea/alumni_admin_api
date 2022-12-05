@@ -106,7 +106,7 @@ function moviderGetBalance($con){
             ],
             'form_params' => [
                 'api_key' => '2H7GtWOeyWYMff0XzK7en5zEdy6',
-                'api_secret' => 'l8KFeCstZZokPZFEW0n8ci8L21k9PQ',
+                'api_secret' => '',
             ]
         ]);
       
@@ -135,7 +135,7 @@ function moviderSentSMS($con, $details){
         $client = new \GuzzleHttp\Client();
         $form_params =[
             'api_key' => '2H7GtWOeyWYMff0XzK7en5zEdy6',
-            'api_secret' => 'l8KFeCstZZokPZFEW0n8ci8L21k9PQ',
+            'api_secret' => '',
             'from' => 'ALumni SPC',
             'text' => $details["text"],
             'to' => '+63'.$details["to"]
