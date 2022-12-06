@@ -27,7 +27,7 @@
                 }else {
                     $getDeatilsUser = $db->Insert("INSERT INTO users (email,password,username,status, user_type) VALUES (?,?,?,?,?)", array($data->email, $data->password, $data->first_name, 0,2));
                     if($getDeatilsUser){
-                        $getDeatilsUser = $db->Insert("INSERT INTO personal_info (user_id,first_name,last_name,contact_no,course_id, sy_id) VALUES (?,?,?,?,?,?)", array( $getDeatilsUser,$data->first_name, $data->last_name, $data->mobile,$data->course,$data->sy));
+                        $getDeatilsUser = $db->Insert("INSERT INTO personal_info (user_id,first_name,last_name,contact_no,course_id, sy_id, `image`) VALUES (?,?,?,?,?,?,?)", array( $getDeatilsUser,$data->first_name, $data->last_name, $data->mobile,$data->course,$data->sy, 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'));
                         echo "NOT_VERIFY";
                     } else {    
                         echo "FAILED";

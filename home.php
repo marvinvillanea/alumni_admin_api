@@ -1,3 +1,9 @@
+<?php 
+    $getHomeDashDAta = "select (select COUNT(*) FROM users WHERE STATUS = 1 AND user_status = 0) AS member_active, (select COUNT(*) FROM users) AS total_registered, (select COUNT(*) FROM job) AS total_jobs, 
+    (select COUNT(*) FROM job WHERE DATE(created_at) = DATE(NOW())) AS total_jobs_today";
+    $getHomeDashDAta = $db->select($getHomeDashDAta);
+ 
+?>
 <!-- MAIN CONTENT-->
 <div class="section__content section__content--p30">
         <div class="container-fluid">
@@ -19,8 +25,8 @@
                                     <i class="zmdi zmdi-account-o"></i>
                                 </div>
                                 <div class="text">
-                                    <h2>0</h2>
-                                    <span>members online</span>
+                                    <h2><?php  echo $getHomeDashDAta[0]["member_active"]  ?></h2>
+                                    <span>members active</span>
                                 </div>
                             </div>
                             <div class="overview-chart">
@@ -37,7 +43,7 @@
                                     <i class="zmdi zmdi-account-o"></i>
                                 </div>
                                 <div class="text">
-                                    <h2>0</h2>
+                                    <h2><?php  echo $getHomeDashDAta[0]["total_registered"]  ?></h2>
                                     <span>total registered</span>
                                 </div>
                             </div>
@@ -55,8 +61,8 @@
                                     <i class="zmdi zmdi-calendar-note"></i>
                                 </div>
                                 <div class="text">
-                                    <h2>0</h2>
-                                    <span>job offered</span>
+                                    <h2><?php  echo $getHomeDashDAta[0]["total_jobs"]  ?></h2>
+                                    <span>total job offered</span>
                                 </div>
                             </div>
                             <div class="overview-chart">
@@ -73,7 +79,7 @@
                                     <i class="zmdi zmdi-calendar-note"></i>
                                 </div>
                                 <div class="text">
-                                    <h2>0</h2>
+                                    <h2><?php  echo $getHomeDashDAta[0]["total_jobs_today"]  ?></h2>
                                     <span>total jobs today</span>
                                 </div>
                             </div>

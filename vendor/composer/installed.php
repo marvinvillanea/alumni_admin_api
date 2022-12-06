@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-moker_update_api_20221126',
-        'version' => 'dev-moker_update_api_20221126',
-        'reference' => '65e0e4a43eeaa0069b9b691098deeb09c4517dd6',
+        'pretty_version' => 'dev-moker_update_api_20221206',
+        'version' => 'dev-moker_update_api_20221206',
+        'reference' => '4cd42bf600cb8cabf6717a6cae18691eb6517386',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-moker_update_api_20221126',
-            'version' => 'dev-moker_update_api_20221126',
-            'reference' => '65e0e4a43eeaa0069b9b691098deeb09c4517dd6',
+            'pretty_version' => 'dev-moker_update_api_20221206',
+            'version' => 'dev-moker_update_api_20221206',
+            'reference' => '4cd42bf600cb8cabf6717a6cae18691eb6517386',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -43,6 +43,15 @@
             'reference' => '67c26b443f348a51926030c83481b85718457d3d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.7',
+            'version' => '6.7.0.0',
+            'reference' => '80fc8686fcd070267b98dae0ec228d5d67d94310',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

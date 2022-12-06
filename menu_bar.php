@@ -126,7 +126,7 @@
     <div class="menu-sidebar__content js-scrollbar1">
         <nav class="navbar-sidebar">
             <ul class="list-unstyled navbar__list">
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'home' ? "active" : '' ?>">
                     <a href="index.php?page=home">
                         <i class="fas fa-chart-bar"></i>Dashboard</a>
                 </li>
@@ -134,41 +134,41 @@
                     <a href="chart.html">
                         <i class="fas fa-chart-bar"></i>Charts</a>
                 </li> -->
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'pending' ? "active" : '' ?>">
                     <a href="index.php?page=pending">
-                        <i class="fas fa-table"></i>Pending Request</a>
+                        <i class="fas fa-cog"></i>Pending Request</a>
                 </li>
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'approved' ? "active" : '' ?>">
                     <a href="index.php?page=approved">
                         <i class="fas fa-table"></i>Approved</a>
                 </li>
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'denied' ? "active" : '' ?>">
                     <a href="index.php?page=denied">
-                        <i class="fas fa-table"></i>Disapproved</a>
+                        <i class="fas fa-ban"></i>Disapproved</a>
                 </li>
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'postingjobs' ? "active" : '' ?>">
                     <a href="index.php?page=postingjobs">
-                        <i class="fas fa-table"></i>Posting Jobs</a>
+                        <i class="fas fa-plus"></i>Posting Jobs</a>
                 </li>
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'joblist' ? "active" : '' ?>">
                     <a href="index.php?page=joblist">
-                        <i class="fas fa-table"></i>Job List</a>
+                        <i class="fas fa-tasks"></i>Job List</a>
                 </li>
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'create_event' ? "active" : '' ?>">
                     <a href="index.php?page=create_event">
-                        <i class="fas fa-table"></i>Create Event</a>
+                        <i class="fas fa-plus"></i>Create Event</a>
                 </li>
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'events' ? "active" : '' ?>">
                     <a href="index.php?page=events">
-                        <i class="fas fa-table"></i>Events</a>
+                        <i class="fas fa-tasks"></i>Events</a>
                 </li>
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'course' ? "active" : '' ?>">
                     <a href="index.php?page=course">
-                        <i class="fas fa-table"></i>Course</a>
+                        <i class="fas fa-tasks"></i>Course</a>
                 </li>
-                <li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'sy' ? "active" : '' ?>">
                     <a href="index.php?page=sy">
-                        <i class="fas fa-table"></i>School Year</a>
+                        <i class="fas fa-tasks"></i>School Year</a>
                 </li>
             </ul>
         </nav>
