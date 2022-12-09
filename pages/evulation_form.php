@@ -325,6 +325,6 @@ function submitData(){
         // location.reload(true); 
     }
     );
-    alert('dsafadsfa');
+    alert('CONFIRM');
 }
 </script>

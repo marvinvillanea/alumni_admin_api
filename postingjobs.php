@@ -6,7 +6,7 @@
     //      $message = "Successfuly Update";
         
     // }
-    addJobsDescriptions($db);
+    addJobsDescriptions($db, $mail);
     // echo "<pre>";
     //     var_dump($_POST);
     // echo "</pre>";

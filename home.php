@@ -167,12 +167,12 @@
 <!-- END MAIN CONTENT-->
 <!-- END PAGE CONTAINER-->
 <script type="text/javascript">
-  function updateStatus(user_id, name) 
-  {
-    $.post("api/confirmation.php",{user_id: user_id, name: name}, function(data) 
-    { 
-        location.reload(true); 
-    }
-    );
-  }
+//   function updateStatus(user_id, name) 
+//   {
+//     $.post("api/confirmation.php",{user_id: user_id, name: name}, function(data) 
+//     { 
+//         location.reload(true); 
+//     }
+//     );
+//   }
 </script>
