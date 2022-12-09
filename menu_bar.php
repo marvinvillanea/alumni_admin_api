@@ -1,5 +1,5 @@
 <!-- HEADER MOBILE-->
-<header class="header-mobile d-block d-lg-none">
+<!-- <header class="header-mobile d-block d-lg-none">
     <div class="header-mobile__bar">
         <div class="container-fluid">
             <div class="header-mobile-inner">
@@ -112,7 +112,7 @@
             </ul>
         </div>
     </nav>
-</header>
+</header> -->
 <!-- END HEADER MOBILE-->
 
 <!-- MENU SIDEBAR-->
@@ -169,6 +169,10 @@
                 <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'sy' ? "active" : '' ?>">
                     <a href="index.php?page=sy">
                         <i class="fas fa-tasks"></i>School Year</a>
+                </li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'list_of_survey' ? "active" : '' ?>">
+                    <a href="index.php?page=list_of_survey">
+                        <i class="fas fa-tasks"></i>List of Survey</a>
                 </li>
             </ul>
         </nav>
