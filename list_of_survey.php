@@ -1,10 +1,24 @@
+<?php
+
+if(isset($_POST["add_new"])) {
+    addQuestion($db);
+}
+if(isset($_POST["add_new_list"])) {
+    addQuestionList($db);
+}
+
+if(isset($_POST["update"])){
+    updateSY($db);
+}
+?>
 <div class="section__content section__content--p30">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
                 <!-- DATA TABLE -->
-                <h3 class="title-5 m-b-35">List of Survey</h3>
-              
+                <h3 class="title-5 m-b-35">List of Survey &nbsp;&nbsp; <button class="btn btn-outline-danger" onclick="add_survey()" >
+                <i class="fa fa-plus" style="font-size:24px"></i></td> </button></h3> 
+
                 <div class="table-responsive table-responsive-data2">
                     <table class="table table-data2">
                         <thead>
@@ -12,7 +26,7 @@
                                 <th>#</th>
                                 <th>Descriptions</th>
                                 <th>Created</th>
-                                <th></th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,5 +116,34 @@
         );
     }
 
-  
+    function add_survey(){
+        $('#scrollmodal').modal('show')
+        $('#parcel_no_value').remove();
+        $('#parcel_details').remove();
+
+        $('#pacel_no').append('<span id="parcel_no_value">Add Question</span>');
+        $.post(
+            "api/view_survey.php",
+            function(data){ 
+                // location.reload(true); 
+                $('#parcel_modal_body').append('<div id="parcel_details"><div class="modal-body">'+data +'</div><div class="modal-footer"></div></div>');
+            }
+        );
+    }
+
+    function addList(survey_id, name){
+        $('#scrollmodal').modal('show')
+        $('#parcel_no_value').remove();
+        $('#parcel_details').remove();
+
+        $('#pacel_no').append('<span id="parcel_no_value">Add List</span>');
+        $.post(
+            "api/view_survey_list.php",
+            {survey_id: survey_id},
+            function(data){ 
+                // location.reload(true); 
+                $('#parcel_modal_body').append('<div id="parcel_details"><div class="modal-body">'+data +'</div><div class="modal-footer"></div></div>');
+            }
+        );
+    }
 </script>

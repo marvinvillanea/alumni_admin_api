@@ -1,23 +1,9 @@
 <?php 
  $message = "";
  if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"]  == "POST") {
- //    updateUSerProfile($db);
-    // if(addJobsDescriptions($db)){
-    //      $message = "Successfuly Update";
-        
-    // }
-    addJobsDescriptions($db, $mail);
-    // echo "<pre>";
-    //     var_dump($_POST);
-    // echo "</pre>";
-
-    // extrat($_POST);
-
-    // header('location:index.php?page=joblist');
-     // echo "<pre>";
-     //     var_dump($_POST);    
-     // echo "</pre>";
- }
+    addJobsDescriptions($db);
+    // header('index.php?page=joblist');
+ }  
 ?>
 
 <div class="section__content section__content--p30">

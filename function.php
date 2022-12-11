@@ -1,8 +1,29 @@
 <?php 
 
+function updateJob($db) {
+    extract($_POST);
+    $data = $db->Select('select * from job
+                where job_id ', array($job_id));
+    if(count($data) > 0) {
+        $folder = "images/company_logo/";
+        $temp = explode(".", $_FILES["photo"]["name"]);
+        $newfilename = $company_name.'_'.round(microtime(true)).'.'. end($temp);
+        $db_path = $folder.$newfilename ;
+        if ( is_uploaded_file( $_FILES['photo']['tmp_name'] ) ){
+            if (move_uploaded_file($_FILES['photo']['tmp_name'],$db_path))
+            {
+                $job_image = getMyUrl().'/'.$db_path;
+                $data = $db->Update("update job SET job_title = ?, job_descriptions = ?,course_id = ?,job_image = ?,min_salary = ?,max_salary = ?,address = ?, company_name = ?, time_type = ? WHERE job_id = ? ", array($job_title,$job_description,$course,$job_image,$min,$max,$address,$company_name,$type_time,$job_id));
+            }
+            
+        } else {
+            $data = $db->Update("update job SET job_title = ?, job_descriptions = ?,course_id = ?,min_salary = ?,max_salary = ?,address = ?, company_name = ?, time_type = ? WHERE job_id = ? ", array($job_title,$job_description,$course,$min,$max,$address,$company_name,$type_time,$job_id));
+        }
+      
+    }         
 
-
-function addJobsDescriptions($db, $mail){
+}
+function addJobsDescriptions($db){
 
 
     //Create an instance; passing `true` enables exceptions
@@ -28,24 +49,26 @@ function addJobsDescriptions($db, $mail){
                 
                 $data = $db->Select('select * from personal_info
                 inner join users using(user_id)
-                where course_id = ? ', array($course));
-                if(moviderGetBalance($db)){
+                where course_id = ? and status in (1) ', array($course));
+                // if(moviderGetBalance($db)){
                     if(count($data) > 0) {
                         foreach ($data as $key => $value) {
                             $message = 'Hi '.ucfirst($value['first_name']). ', Good day! We have new job offer from '.ucwords($company_name).'. Job Title : '.ucwords($job_title).'. If you\'re willing to apply please visit to our app for more information. Thank you and have A nice day. From Alumni SPC ';
                             $details = [
                                 "text" => $message,
-                                "to" => $value["contact_no"]
+                                "to" => $value["contact_no"],
+                                "type" => "sms"
                             ];
-                            // echo "<pre>";
-                            //     var_dump($details);
-                            // echo "</pre>";
-                            moviderSentSMS($db, $details);
-                            try {
-                                sentEmailMessage($db,$mail , $value["email"],ucfirst($value['first_name']), $message,'SPC Alumni Adminstrator','New Job Offered');
-                            } catch (\Throwable $th) {
-                                //throw $th;
-                            }
+                            $db->Insert("INSERT INTO `cron_job` (request_body) VALUES (?)", array(json_encode($details)));
+                            $details = [
+                                "type" => "email",
+                                "email" => $value["email"],
+                                "firstname" => $value['first_name'],
+                                "message" => $message,
+                                "setFRom" => 'SPC Alumni Administrator',
+                                "subject" => 'New Job Offered'
+                            ];
+                            $db->Insert("INSERT INTO `cron_job` (request_body) VALUES (?)", array(json_encode($details)));
                             
 
                         }
@@ -56,7 +79,7 @@ function addJobsDescriptions($db, $mail){
                        ];
                        echo json_encode($response);
                     }
-                }
+                // }
             }catch(Exception $e){
                 echo $e->getMessage();
             }
@@ -81,17 +104,73 @@ function addEvent($db){
             if (move_uploaded_file($_FILES['photo']['tmp_name'],$db_path))
             {
             
-                    $link = getMyUrl().'/'.$db_path;
+                $link = getMyUrl().'/'.$db_path;
+                
+                $db->Insert('insert into error_logs (descriptions) values (?) ', array(json_encode($_POST)));
+                $db->Insert('insert into events (`event_name`,`when`,`where`,`desciptions`,`banner` ) values (?,?,?,?,?) ', array($event_name,$when,$where,$descriptions,$link));
+                
+                $data = $db->Select('select * from personal_info
+                inner join users using(user_id)
+                where status = 1 ');
+                if(count($data) > 0) {
+                    foreach ($data as $key => $value) {
+                        $message = 'Hi '.ucfirst($value['first_name']). ', We would like to know you that we have upcoming event for '.$descriptions.'. We hope that you join and have fun. Thank you. SPC Alumni Administrator.';
+                        $details = [
+                            "text" => $message,
+                            "to" => $value["contact_no"],
+                            "type" => "sms"
+                        ];
+                        $db->Insert("INSERT INTO `cron_job` (request_body) VALUES (?)", array(json_encode($details)));
+                        $details = [
+                            "type" => "email",
+                            "email" => $value["email"],
+                            "firstname" => $value['first_name'],
+                            "message" => $message,
+                            "setFRom" => 'SPC Alumni Administrator',
+                            "subject" => 'New Event Announcement!...'
+                        ];
+                        $db->Insert("INSERT INTO `cron_job` (request_body) VALUES (?)", array(json_encode($details)));
+
+                    }
                     
-                    $db->Insert('insert into error_logs (descriptions) values (?) ', array(json_encode($_POST)));
-                    $db->Insert('insert into events (`event_name`,`when`,`where`,`desciptions`,`banner` ) values (?,?,?,?,?) ', array($event_name,$when,$where,$descriptions,$link));
-                    
-            
+                } else {
+                    $response = [
+                    "error" => "NO data found"
+                    ];
+                    echo json_encode($response);
+                }
             }
         }
     }catch(Exception $e){
         echo $e->getMessage();
     }
+}
+
+function updateEvent($db){
+    extract($_POST);
+    $data = $db->Select('select * from events
+                where event_id ', array($event_id));
+    if(count($data) > 0) {
+        $folder = "images/event_logo/";
+        $temp = explode(".", $_FILES["photo"]["name"]);
+        $newfilename = $event_name.'_'.round(microtime(true)).'.'. end($temp);
+        $db_path = $folder.$newfilename ;
+        if ( is_uploaded_file( $_FILES['photo']['tmp_name'] ) ){
+            if (move_uploaded_file($_FILES['photo']['tmp_name'],$db_path))
+            {
+                try {
+                    $job_image = getMyUrl().'/'.$db_path;
+                    $db->Update("update `events` SET `event_name` = ?, `when` = ?,`where` = ?,`desciptions` = ?,`banner` = ? WHERE `event_id` = ? ", array($event_name,$when,$where,$desciptions,$job_image,$event_id));
+                } catch (\Exception $e) {
+                    echo $e->getMessage();
+                }
+            }
+            
+        } else {
+            $db->Update("update `events` SET `event_name` = ?, `when` = ?,`where` = ?,`desciptions` = ? WHERE `event_id` = ? ", array($event_name,$when,$where,$desciptions,$event_id));
+        }
+      
+    }         
 }
 
 function getMyUrl()
@@ -180,46 +259,32 @@ function moviderSentSMS($con, $details){
     
 }
 
-function sentEmailMessage($db,$mail, $email, $firstname,$message, $setFRom,$subject){
-    $form_params =[
-        'MESSAGE' => 'STARTING POTIN'
-    ];
-    $db->Insert('insert into error_logs (descriptions) values (?) ', array(json_encode($form_params)));
-    // $mail = new PHPMailer(true);
-    try {
-        
-        //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-        $mail->isSMTP();                                            //Send using SMTP
-        $mail->Host       = GOOGLE_HOST;                     //Set the SMTP server to send through
-        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-        $mail->Username   = GOOGLE_EMAIL;                     //SMTP username
-        $mail->Password   = GOOGLE_PASSWORD;                               //SMTP password
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-        $mail->Port       = 465;       
-                                     //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-        //Recipients
-        $mail->setFrom(GOOGLE_EMAIL,  $setFRom);
-        $mail->addAddress($email, ucfirst($firstname));     //Add a recipient
-
-        //Content
-        $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = $subject;
-        $mail->Body    = $message;
-        $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-    
-        $mail->send();
-        $form_params =[
-            'MESSAGE' => 'SENDING THE MESSAGE'
-        ];
-        $db->Insert('insert into error_logs (descriptions) values (?) ', array(json_encode($form_params)));
-    } catch (\Exception $e) {
-        $form_params =[
-            'MESSAGE' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"
-        ];
-        $db->Insert('insert into error_logs (descriptions) values (?) ', array(json_encode($form_params)));
-    }
+function addNewCourse($db){
+    extract($_POST);
+    $db->Insert('insert into course (`code`,`descriptions`) values (?,?) ', array($code, $descriptions));
 }
 
+function updateCourse($db){
+    extract($_POST);
+    $db->Update("update `course` SET `code` = ?, `descriptions` = ? WHERE `course_id` = ? ", array($code,$descriptions,$course_id));
+}
 
+function addNewSY($db){
+    extract($_POST);
+    $db->Insert('insert into `sy` (`sy`) values (?) ', array($sy));
+}
+function updateSY($db){
+    extract($_POST);
+    $db->Update("update `sy` SET `sy` = ? WHERE `sy_id` = ? ", array($sy ,$sy_id));
+}
+
+function addQuestion($db){
+    extract($_POST);
+    $db->Insert('insert into `survey` (`descriptions`) values (?) ', array($descriptions));
+}
+
+function addQuestionList($db){
+    extract($_POST);
+    $db->Insert('insert into `bullet_survey` (`descriptions`,`survey_id`) values (?, ?) ', array($descriptions, $survey_id));
+}
 ?>
