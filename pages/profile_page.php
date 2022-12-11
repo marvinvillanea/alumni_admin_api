@@ -70,13 +70,27 @@ input[type=submit]:hover {
 </head>
 <body>
 <div class="container">
-  <form >
+  <!-- <form > -->
+
+  <form action="?token=<?php echo isset($_GET["token"]) ? $_GET["token"] : 'no token' ?>" method="POST" enctype="multipart/form-data" >
+  <input type="hidden" name="user_id" value="<?php echo $data[0]["user_id"] ?>">
+  <div class="form-group" >
+        <img src="<?php echo $data[0]["image"] ?>" width="200" style="display:flex;margin:0px auto;" />
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname">Upload New Profile</label>
+      </div>
+      <div class="col-75">
+        <input type="file" name="photo" id="preview_photo"  class="form-control" style="border:none!important;" >
+      </div>
+    </div>
     <div class="row">
       <div class="col-25">
         <label for="fname">First Name</label>
       </div>
       <div class="col-75">
-        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+        <input type="text" id="fname" name="first_name" placeholder="<?php echo $data[0]["first_name"]?>" value="<?php echo $data[0]["first_name"]?>">
       </div>
     </div>
     <div class="row">
@@ -84,30 +98,35 @@ input[type=submit]:hover {
         <label for="lname">Last Name</label>
       </div>
       <div class="col-75">
-        <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+        <input type="text" id="lname" name="last_name" placeholder="<?php echo $data[0]["last_name"]?>" value="<?php echo $data[0]["last_name"]?>" >
       </div>
     </div>
     <div class="row">
       <div class="col-25">
-        <label for="country">Country</label>
+        <label for="mname">Middle Name</label>
       </div>
       <div class="col-75">
-        <select id="country" name="country">
-          <option value="australia">Australia</option>
-          <option value="canada">Canada</option>
-          <option value="usa">USA</option>
-        </select>
+        <input type="text" id="mname" name="middle_name" placeholder="<?php echo $data[0]["middle_name"]?>" value="<?php echo $data[0]["middle_name"]?>" >
       </div>
     </div>
     <div class="row">
       <div class="col-25">
-        <label for="subject">Subject</label>
+        <label for="cnumber">Contact No.</label>
       </div>
       <div class="col-75">
-        <textarea id="subject" name="subject" placeholder="Write something.." style="height:200px"></textarea>
+        <input type="text" id="cnumber" name="contact_no" placeholder="<?php echo $data[0]["contact_no"]?>" value="<?php echo $data[0]["contact_no"]?>" >
       </div>
     </div>
+   
     <div class="row">
+      <div class="col-25">
+        <label for="address">Current Address</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="address" name="address" placeholder="<?php echo $data[0]["address"]?>" value="<?php echo $data[0]["address"]?>" >
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px">
       <input  class="au-btn au-btn--block au-btn--green m-b-20" type="submit" style="background:linear-gradient(90deg, rgb(120 7 7) 0%, rgb(253 29 29) 100%)" name="update" value="save us"/>
     </div>
   </form>
