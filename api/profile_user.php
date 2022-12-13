@@ -18,7 +18,7 @@
             $db->Insert("INSERT INTO `error_logs` (descriptions) VALUES (?)", array(json_encode($data)));
             if(isset($data->token)){
                 // $data = array();
-                $getDeatilsUser = $db->Select("SELECT user_id,CONCAT(pf.first_name, ', ' ,pf.last_name) AS fullname,u.email,pf.contact_no , descriptions, `image`
+                $getDeatilsUser = $db->Select("SELECT user_id,CONCAT(pf.first_name, ', ' ,pf.last_name) AS fullname,u.email,pf.contact_no , descriptions, `image`, pf.address
                 from access_token 
                 INNER JOIN users u USING(user_id) 
                 INNER JOIN personal_info pf USING(user_id) 
@@ -32,8 +32,9 @@
                                 "full_name" => ucwords($getDeatilsUser[0]["fullname"]),
                                 "email" => $getDeatilsUser[0]["email"],
                                 "contact_no" => $getDeatilsUser[0]["contact_no"],
-                                "course" => $getDeatilsUser[0]["descriptions"],
-                                "image" => $getDeatilsUser[0]["image"]
+                                "course" => ucwords($getDeatilsUser[0]["descriptions"]),
+                                "image" => $getDeatilsUser[0]["image"],
+                                "address" => $getDeatilsUser[0]["address"],
                             ],
                         );
                         echo json_encode($response);
