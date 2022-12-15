@@ -93,50 +93,108 @@
 
             <div class="row">
                 <?php 
-                    $data = $db->select('select * from survey order by descriptions asc');
-                    if(count($data) > 0){
-
-                        foreach ($data as $key => $value) {
-                           $survey_id = $value["survey_id"];
-                           $descriptions = $value["descriptions"];
-
-                           $data2 = $db->select('select * , (SELECT COUNT(*) FROM alumni_evulation WHERE bullet_id = bs.bullet_id ) AS tota_alumni_survey from bullet_survey bs where survey_id = '.$survey_id.' order by descriptions asc');
-                            
-                           if(count($data2)) {
-                            ?>
-                            <div class="col-lg-6">
-                                <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
-                                    <div class="au-card-inner">
-                                        <div class="table-responsive">
-                                            <h4 style="color:white"><?php echo ucwords($descriptions) ?></h4>    
-                                            <table class="table table-top-countries">
-                                                <tbody>
-                                                <?php 
-                                                       foreach ($data2 as $key => $value) {
-                                                            $bullet_id = $value["bullet_id"];
-                                                            $list_descriptions = $value["descriptions"];
-                                                            $tota_alumni_survey = $value["tota_alumni_survey"];
-                                                            ?>
-                                                                <tr>
-                                                                    <td><?php echo $list_descriptions ?></td>
-                                                                    <td class="text-right"><?php echo $tota_alumni_survey ?></td>
-                                                                </tr>
-                                                            <?php
-                                                       }
-                                                ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
+                   $data2 = $db->select('select age, count(*) as total_age  from survey_information group by age');
+                    
+                   if(count($data2)) {
+                    ?>
+                    <div class="col-lg-4">
+                        <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
+                            <div class="au-card-inner">
+                                <div class="table-responsive">
+                                    <h4 style="color:white">Total Range Age:</h4>    
+                                    <table class="table table-top-countries">
+                                        <tbody>
+                                        <?php 
+                                               foreach ($data2 as $key => $value) {
+                                                    $age = $value["age"];
+                                                    $total_age = $value["total_age"];
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $age ?></td>
+                                                            <td class="text-right"><?php echo $total_age ?></td>
+                                                        </tr>
+                                                    <?php
+                                               }
+                                        ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            
-                            <?php
-                           } 
-                        }
-                        
+                        </div>
+                    </div>
+                    
+                    <?php
+                   } 
+                ?>
 
-                    }
+                <?php 
+                   $data2 = $db->select('select sex, count(*) as total_sex  from survey_information group by sex');
+                    
+                   if(count($data2)) {
+                    ?>
+                    <div class="col-lg-4">
+                        <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
+                            <div class="au-card-inner">
+                                <div class="table-responsive">
+                                    <h4 style="color:white">Total for each Gender:</h4>    
+                                    <table class="table table-top-countries">
+                                        <tbody>
+                                        <?php 
+                                               foreach ($data2 as $key => $value) {
+                                                    $age = $value["sex"];
+                                                    $total_age = $value["total_sex"];
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $age ?></td>
+                                                            <td class="text-right"><?php echo $total_age ?></td>
+                                                        </tr>
+                                                    <?php
+                                               }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <?php
+                   } 
+                ?>
+
+                <?php 
+                   $data2 = $db->select('select civil_status, count(*) as total_civil  from survey_information group by civil_status');
+                    
+                   if(count($data2)) {
+                    ?>
+                    <div class="col-lg-4">
+                        <div class="au-card au-card--bg-blue au-card-top-countries m-b-30">
+                            <div class="au-card-inner">
+                                <div class="table-responsive">
+                                    <h4 style="color:white">Civil Status:</h4>    
+                                    <table class="table table-top-countries">
+                                        <tbody>
+                                        <?php 
+                                               foreach ($data2 as $key => $value) {
+                                                    $age = $value["civil_status"];
+                                                    $total_age = $value["total_civil"];
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $age ?></td>
+                                                            <td class="text-right"><?php echo $total_age ?></td>
+                                                        </tr>
+                                                    <?php
+                                               }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <?php
+                   } 
                 ?>
 
             </div>

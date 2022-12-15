@@ -174,6 +174,10 @@
                     <a href="index.php?page=list_of_survey">
                         <i class="fas fa-tasks"></i>List of Survey</a>
                 </li>
+                <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'survey_report' ? "active" : '' ?>">
+                    <a href="index.php?page=survey_report">
+                        <i class="fas fa-tasks"></i>Survey Report</a>
+                </li>
             </ul>
         </nav>
     </div>
