@@ -1,7 +1,7 @@
 <?php 
  $message = "";
  if (isset($_SERVER["REQUEST_METHOD"]) && $_SERVER["REQUEST_METHOD"]  == "POST") {
-    addJobsDescriptions($db);
+     addJobsDescriptions($db);
     // header('index.php?page=joblist');
  }  
 ?>
@@ -76,6 +76,15 @@
                                 <div class="form-group">
                                     <label for="max" class="form-control-label" required>Address</label>
                                     <input type="text"  class="form-control"  name="address">
+                                </div>
+
+                                 <div class="form-group">
+                                    <label for="inputIsInvalid" class=" form-control-label">Start Time</label>
+                                    <input type="datetime-local" id="inputIsInvalid" class="form-control" name="start_job" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputIsInvalid" class=" form-control-label">End Time</label>
+                                    <input type="datetime-local" id="inputIsInvalid" class="form-control" name="end_job" required>
                                 </div>
                                 <div class="form-group">
                                     <input  class="au-btn au-btn--block au-btn--green m-b-20" type="submit" style="background:linear-gradient(90deg, rgb(120 7 7) 0%, rgb(253 29 29) 100%)" name="submit" value="save us"/>

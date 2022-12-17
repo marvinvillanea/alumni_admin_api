@@ -45,7 +45,7 @@ function addJobsDescriptions($db){
                 $link = getMyUrl().'/'.$db_path;
                 
                 $db->Insert('insert into error_logs (descriptions) values (?) ', array(json_encode($_POST)));
-                $db->Insert('insert into job (job_title,job_descriptions,course_id,min_salary,max_salary,address,company_name,time_type,job_image ) values (?,?,?,?,?,?,?,?,?) ', array( ucwords($job_title),$job_description,$course,$min,$max,ucwords($address),ucwords($company_name), $type_time ,$link));
+                $db->Insert('insert into job (job_title,job_descriptions,course_id,min_salary,max_salary,address,company_name,time_type,job_image,`expired_date`,`start_date` ) values (?,?,?,?,?,?,?,?,?,?,?) ', array( ucwords($job_title),$job_description,$course,$min,$max,ucwords($address),ucwords($company_name), $type_time ,$link, $end_job, $start_job));
                 
                 $data = $db->Select('select * from personal_info
                 inner join users using(user_id)
