@@ -30,8 +30,8 @@ if(isset($_POST['data']))
     if($data["year_graduated"] != "all" ) {
         $where_statment .= "and sy_id = '".$data["year_graduated"]."' ";
         $group_by .= ", sy_id";
-        $header .= " , sy_id";
-        array_push($data_row_table,"sy_id");
+        $header .= ",(select sy from sy where sy_id = pf.sy_id) as sy_name";
+        array_push($data_row_table,"sy_name");
         array_push($headr_table,"year graduated");
     }
 
