@@ -77,6 +77,12 @@ $number_of_new_request = $db->select("SELECT count(*) total
                         <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'job_reports' ? "active" : '' ?>">
                             <a href="index.php?page=job_reports"><i class="fas fa-users"></i>Job Report</a>
                         </li>
+                        <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'alumni_report' ? "active" : '' ?>">
+                            <a href="index.php?page=alumni_report"><i class="fas fa-users"></i>Alumni Report</a>
+                        </li>
+                        <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'user_report' ? "active" : '' ?>">
+                            <a href="index.php?page=user_report"><i class="fas fa-users"></i>User Report</a>
+                        </li>
                     </ul>
                 </li>
             </ul>
