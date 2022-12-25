@@ -10,70 +10,108 @@
             $year = $_POST["year"];
             $age = $_POST["age"];
 
-            $andddd = ' ';
+
+            $where_survey = '';
+            if($id != 'all') {
+                $where_survey .= 'where survey_id = '.$_POST["id"];
+            }
+
+            $where_course_id = '';
             if($course_id != 'all') {
-                $andddd .= 'and course_id = '.$course_id;
+                $where_course_id .= 'where course_id = '.$course_id;
             }
 
-            $andddd .=' ';
+            $where_sy_id = '';
             if($year != 'all') {
-                $andddd .= 'and sy_id = '.$year;
+                $where_sy_id .= 'where sy_id = '.$year;
             }
 
-            $andddd .=' ';
+            $get_age_range = array();
             if($age != 'all') {
-                $andddd .= 'and age = "'.$age.'" ';
+                array_push($get_age_range, $age);
             }
-          
-         }
 
-        
+                $get_code = $db->Select('select code,course_id from course '.$where_course_id.' ');
+                $headers_table = array();
+                $query_columnn = "";
 
-        $data = $db->select('select * from survey where survey_id = '.$_POST["id"].' order by descriptions asc');
-        if(count($data) > 0){
+                foreach ($get_code as $key => $value) {
+                     array_push($headers_table, $value["code"]);
+                     $query_columnn .= '( SELECT COUNT(*) FROM alumni_evulation WHERE bullet_id = bs.bullet_id AND user_id IN (SELECT user_id FROM personal_info WHERE course_id = '.$value["course_id"].' ) ) AS '.$value["code"].', ';
+                }
 
-            foreach ($data as $key => $value) {
-               $survey_id = $value["survey_id"];
-               $descriptions = $value["descriptions"];
+                $get_sy = $db->Select('select sy_id,sy from sy  '.$where_sy_id.' ');
 
-               $sql = 'select bullet_id, descriptions, ( case when total_count is NULL then 0 ELSE total_count END ) tota_alumni_survey FROM bullet_survey  LEFT JOIN  
-        (SELECT ae.bullet_id, COUNT(ae.bullet_id) AS total_count FROM survey_information INNER JOIN alumni_evulation ae USING(survey_info_id) WHERE ae.bullet_id IN ( SELECT bullet_id FROM bullet_survey WHERE survey_id = '.$survey_id.'  ) '.$andddd.' GROUP BY ae.bullet_id ) AS survey_count USING(bullet_id) WHERE survey_id = '.$survey_id.' ';
-               $data2 = $db->select($sql);
-                
-               if(count($data2)) {
-                ?>
-                <div class="col-lg-12">
-                    <div class="au-card au-card--bg-blue au-card-top-countries ">
-                        <div class="au-card-inner">
-                            <div class="table-responsive">
-                                <h4 style="color:white"><?php echo ucwords($descriptions) ?></h4>    
-                                <table class="table table-top-countries">
+                foreach ($get_sy as $key => $value) {
+                    array_push($headers_table, $value["sy"]);
+                    $query_columnn .= '( SELECT COUNT(*) FROM alumni_evulation WHERE bullet_id = bs.bullet_id AND user_id IN (SELECT user_id FROM personal_info WHERE sy_id = '.$value["sy_id"].' ) ) AS `'.$value["sy"].'`, ';
+                }
+
+                foreach ($get_age_range as $value) {
+                   array_push($headers_table, $value);
+                   $query_columnn .= '( SELECT COUNT(*) FROM alumni_evulation WHERE bullet_id = bs.bullet_id AND survey_info_id IN (select survey_info_id from survey_information where age = "'.$value.'" ) ) AS `'.$value.'`, ';
+                }
+
+
+                $data = $db->select('select * from survey '.$where_survey.' order by descriptions asc');
+                if(count($data) > 0){
+
+                    foreach ($data as $key => $value) {
+                       $survey_id = $value["survey_id"];
+                       $descriptions = $value["descriptions"];
+
+                       $sql = 'select survey_id, '.$query_columnn.' bullet_id, descriptions FROM bullet_survey bs  WHERE survey_id = (SELECT survey_id FROM survey WHERE survey_id = '.$survey_id.') ';
+                       $data2 = $db->select($sql);
+                        
+                       if(count($data2)) {
+                        ?>
+                        <div class="col col-lg-12">
+                            <div class="table-responsive table--no-card m-b-30">
+                                <h3><?php echo ucwords($descriptions) ?></h3> 
+                                <table class="table table-borderless table-striped table-earning">
+                                     <thead>
+                                        <tr>
+                                            <th>Descriptions</th>
+                                            <?php
+
+                                            foreach ($headers_table as $value) {
+                                                ?>
+                                                <th><?php echo $value ?></th>
+                                                <?php
+                                            }
+
+                                             ?>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                     <?php 
-                                           foreach ($data2 as $key => $value) {
-                                                $bullet_id = $value["bullet_id"];
-                                                $list_descriptions = $value["descriptions"];
-                                                $tota_alumni_survey = $value["tota_alumni_survey"];
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $list_descriptions ?></td>
-                                                        <td class="text-right"><?php echo $tota_alumni_survey ?></td>
-                                                    </tr>
-                                                <?php
-                                           }
+                                       foreach ($data2 as $key => $value) {
+                                            ?>
+                                                <tr>
+                                                     <?php
+                                                     echo "<td> ".$value["descriptions"]." </td>";
+                                                        foreach ($headers_table as  $td) {
+                                                           echo "<td> ".$value[$td]." </td>";
+                                                        }
+                                                      ?>
+                                                </tr>
+                                            <?php
+                                       }
                                     ?>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                    </div>
-                </div>
-                
-                <?php
-               } 
-            }
-            
+                        <?php
+                       } 
+                    }
+                    
+                }
+          
+         }
 
-        }
+        
+
+        
     ?>
 </div>

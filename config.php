@@ -2,9 +2,9 @@
     define('DBUSER','root');
     define('DBPWD','');
     define('DBHOST','localhost');
-    define('DBNAME','spc_alumni');
-    define('HOST','http://localhost:80');
-    define('URL','http://192.168.254.136:80');
+    define('DBNAME','alumni_db');
+    define('HOST','http://localhost:7070');
+    define('URL','http://192.168.254.136:7070');
     define('GOOGLE_PASSWORD' , 'fqqxwqaqijuboskg');
     define('GOOGLE_EMAIL', 'spc.admnstrtor@gmail.com');
     define('GOOGLE_HOST', 'smtp.gmail.com');

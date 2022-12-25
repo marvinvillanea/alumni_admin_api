@@ -68,7 +68,8 @@
                     <?php
                         $sy = $db->select("SELECT * FROM survey order by created_at asc");
                         if(count($sy) > 0){
-                            echo "<option value='all' disabled selected> -- Select Survey -- </option>";
+                            echo "<option value='empty' disabled selected> -- Select Survey -- </option>";
+                            echo "<option value='all' > ALL </option>";
                             foreach ($sy as $key => $value) {
                                 ?>
                                 <option value="<?php echo $value["survey_id"]; ?>"><?php echo $value["descriptions"]; ?></option>
@@ -121,6 +122,6 @@
     }
 
     function clearSelect(){
-        $('#selectedDeafult  option[value="all"]').prop("selected", true);
+        $('#selectedDeafult  option[value="empty"]').prop("selected", true);
     }
 </script>
