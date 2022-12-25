@@ -46,11 +46,11 @@ $number_of_new_request = $db->select("SELECT count(*) total
                 </li>
                 <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'create_event' ? "active" : '' ?>">
                     <a href="index.php?page=create_event">
-                        <i class="fas fa-plus"></i>Create Event</a>
+                        <i class="fas fa-plus"></i>Create Announcement</a>
                 </li>
                 <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'events' ? "active" : '' ?>">
                     <a href="index.php?page=events">
-                        <i class="fas fa-tasks"></i>Events</a>
+                        <i class="fas fa-tasks"></i>Announcement</a>
                 </li>
                 <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'course' ? "active" : '' ?>">
                     <a href="index.php?page=course">
@@ -76,6 +76,12 @@ $number_of_new_request = $db->select("SELECT count(*) total
                         </li>
                         <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'job_reports' ? "active" : '' ?>">
                             <a href="index.php?page=job_reports"><i class="fas fa-users"></i>Job Report</a>
+                        </li>
+                        <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'alumni_report' ? "active" : '' ?>">
+                            <a href="index.php?page=alumni_report"><i class="fas fa-users"></i>Alumni Report</a>
+                        </li>
+                        <li class="<?php echo isset($_GET["page"]) && $_GET["page"] == 'user_report' ? "active" : '' ?>">
+                            <a href="index.php?page=user_report"><i class="fas fa-users"></i>User Report</a>
                         </li>
                     </ul>
                 </li>
